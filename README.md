@@ -8,11 +8,31 @@ Java esl client for netty4
 **esl-client-netty4** is a Java-based Event Socket Library for the
 [FreeSWITCH](https://freeswitch.org/) project.
 
-This project is a fork of the unmaintained, original project at
+This project is a fork of the unmaintained, original project at:  
 <https://freeswitch.org/stash/projects/FS/repos/freeswitch-contrib/browse/dvarnes/java/esl-client>
 
 Status: In Progress...
 
+About
+------------------------------------------------------------------------------
+This page documents the org.freeswitch.esl.client library maintained in the freeswitch-contrib git repository. See Java ESL page for overview of other options for using Java with the FreeSWITCH Event Socket.
+
+Features
+------------------------------------------------------------------------------
+- Licensed under Apache License version 2 http://www.apache.org/licenses/LICENSE-2.0
+- Runtime dependency on Netty (Apache License) and SLF4j (MIT License) libraries
+- No native library runtime dependencies
+- ESL Inbound and Outbound support, see Event Socket and Event Socket Outbound.
+- OSGi ready
+- Built using maven
+
+Runtime dependencies
+------------------------------------------------------------------------------
+If you download and install the jar(s) manually, you must also supply the following jars on your Java classpath
+
+- netty-3.10.6.Final.jar for async socket comms
+- slf4j-api-1.7.30.jar for logging
+- An slf4j implementation, use slf4j-nop.jar if no logging required.
 
 Example
 ------------------------------------------------------------------------------
@@ -76,23 +96,6 @@ public class FreeSwitchEventListener {
 
 }
 ```
-
-Features
-------------------------------------------------------------------------------
-- Licensed under Apache License version 2 http://www.apache.org/licenses/LICENSE-2.0
-- Runtime dependency on Netty (Apache License) and SLF4j (MIT License) libraries
-- No native library runtime dependencies
-- ESL Inbound and Outbound support, see Event Socket and Event Socket Outbound.
-- OSGi ready
-- Built using maven
-
-Runtime dependencies
-------------------------------------------------------------------------------
-If you download and install the jar(s) manually, you must also supply the following jars on your Java classpath
-
-- netty-3.10.6.Final.jar for async socket comms
-- slf4j-api-1.7.30.jar for logging
-- An slf4j implementation, use slf4j-nop.jar if no logging required.
 
 Authors
 ------------------------------------------------------------------------------
