@@ -30,8 +30,9 @@ Runtime dependencies
 ------------------------------------------------------------------------------
 If you download and install the jar(s) manually, you must also supply the following jars on your Java classpath
 
-- netty-3.10.6.Final.jar for async socket comms
+- netty-4.1.50.Final.jar for async socket comms
 - slf4j-api-1.7.30.jar for logging
+- guava:29.0-jre Google core libraries for Java
 - An slf4j implementation, use slf4j-nop.jar if no logging required.
 
 Example
