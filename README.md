@@ -98,6 +98,31 @@ public class FreeSwitchEventListener {
 }
 ```
 
+From maven central repository
+------------------------------------------------------------------------------
+Assuming you are using a build tool that can resolve dependencies from the maven 2 central repository, add the following to your project pom.xml
+
+* Maven
+```
+<dependency>
+  <groupId>org.freeswitch.esl.client</groupId>
+  <artifactId>esl-client-netty4</artifactId>
+  <version>0.9.2</version>
+  <type>pom</type>
+</dependency>
+```
+* Gradle
+```
+implementation 'org.freeswitch.esl.client:esl-client-netty4:0.9.2'
+```
+
+* Ivy
+```
+<dependency org='org.freeswitch.esl.client' name='esl-client-netty4' rev='0.9.2'>
+  <artifact name='esl-client-netty4' ext='pom' ></artifact>
+</dependency>
+```
+
 Authors
 ------------------------------------------------------------------------------
 
