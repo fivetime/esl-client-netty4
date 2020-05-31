@@ -1,11 +1,11 @@
 
-esl-client
+Java esl client for netty4
 ==============================================================================
 
-[![Travis](https://img.shields.io/travis/mgodave/esl-client.svg)](https://travis-ci.org/mgodave/esl-client)
-[![Maven Central](https://img.shields.io/maven-central/v/org.freeswitch.esl.client/org.freeswitch.esl.client.svg)](http://search.maven.org/#artifactdetails%7Corg.freeswitch.esl.client%7Corg.freeswitch.esl.client%7C0.9.2%7Cbundle)
+[![Travis](https://img.shields.io/travis/mgodave/esl-client.svg)](https://travis-ci.org/fivetime/esl-client-netty4)
+[![Maven Central](https://img.shields.io/maven-central/v/org.freeswitch.esl.client/org.freeswitch.esl.client.svg)](http://search.maven.org/#artifactdetails%7Corg.freeswitch.esl.client%7Cesl-client-netty4%7C0.9.2%7Cbundle)
 
-**esl-client** is a Java-based Event Socket Library for the
+**esl-client-netty4** is a Java-based Event Socket Library for the
 [FreeSWITCH](https://freeswitch.org/) project.
 
 This project is a fork of the unmaintained, original project at
@@ -76,6 +76,23 @@ public class FreeSwitchEventListener {
 
 }
 ```
+
+Features
+------------------------------------------------------------------------------
+- Licensed under Apache License version 2 http://www.apache.org/licenses/LICENSE-2.0
+- Runtime dependency on Netty (Apache License) and SLF4j (MIT License) libraries
+- No native library runtime dependencies
+- ESL Inbound and Outbound support, see Event Socket and Event Socket Outbound.
+- OSGi ready
+- Built using maven
+
+Runtime dependencies
+------------------------------------------------------------------------------
+If you download and install the jar(s) manually, you must also supply the following jars on your Java classpath
+
+- netty-3.10.6.Final.jar for async socket comms
+- slf4j-api-1.7.30.jar for logging
+- An slf4j implementation, use slf4j-nop.jar if no logging required.
 
 Authors
 ------------------------------------------------------------------------------
