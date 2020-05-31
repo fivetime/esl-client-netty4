@@ -109,5 +109,5 @@ Authors
 License
 ------------------------------------------------------------------------------
 
-**esl-client** is licensed under the [Apache License, version 2](LICENSE).
+**esl-client-netty4** is licensed under the [Apache License, version 2](LICENSE).
 
