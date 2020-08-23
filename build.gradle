@@ -28,7 +28,7 @@ allprojects {
 
 dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
-    compile group: 'io.netty', name: 'netty-all', version: '4.1.50.Final'
+    compile group: 'io.netty', name: 'netty-all', version: '4.1.51.Final'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
 
     runtime 'ch.qos.logback:logback-classic:1.2.3'

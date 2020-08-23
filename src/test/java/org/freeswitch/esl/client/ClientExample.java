@@ -28,7 +28,9 @@ public class ClientExample {
             client.setEventSubscriptions(EventFormat.PLAIN, "all");
 
         } catch (Throwable t) {
-            Throwables.propagate(t);
+            Throwables.throwIfUnchecked(t);
+            throw new RuntimeException(t);
+            //Throwables.propagate(t);
         }
     }
 }
