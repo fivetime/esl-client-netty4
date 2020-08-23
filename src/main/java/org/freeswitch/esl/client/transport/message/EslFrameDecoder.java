@@ -19,6 +19,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ReplayingDecoder;
 import io.netty.handler.codec.TooLongFrameException;
+import io.netty.util.ReferenceCountUtil;
 import org.freeswitch.esl.client.transport.HeaderParser;
 import org.freeswitch.esl.client.transport.message.EslHeaders.Name;
 import org.slf4j.Logger;
@@ -133,8 +134,8 @@ public class EslFrameDecoder extends ReplayingDecoder<EslFrameDecoder.State> {
 
 			case READ_BODY:
 				/*
-								*   read the content-length specified
-								*/
+				*   read the content-length specified
+				*/
 				int contentLength = currentMessage.getContentLength();
 				ByteBuf bodyBytes = buffer.readBytes(contentLength);
 				log.debug("read [{}] body bytes", bodyBytes.writerIndex());
@@ -143,6 +144,10 @@ public class EslFrameDecoder extends ReplayingDecoder<EslFrameDecoder.State> {
 					String bodyLine = readLine(bodyBytes, contentLength);
 					log.debug("read body line [{}]", bodyLine);
 					currentMessage.addBodyLine(bodyLine);
+				}
+				// release bodyBytes
+				if (bodyBytes.refCnt() > 0) {
+					ReferenceCountUtil.safeRelease(bodyBytes);
 				}
 
 				// end of message

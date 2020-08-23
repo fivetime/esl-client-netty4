@@ -55,7 +55,7 @@ public class EslEvent {
 	private final Map<Name, String> messageHeaders;
 	private final Map<String, String> eventHeaders;
 	private final List<String> eventBody;
-	private boolean decodeEventHeaders = true;
+	private final boolean decodeEventHeaders = true;
 
 	public EslEvent(EslMessage rawMessage) {
 		this(rawMessage, false);
@@ -124,7 +124,7 @@ public class EslEvent {
 	 * @return long value of the event header "Event-Date-Timestamp"
 	 */
 	public long getEventDateTimestamp() {
-		return Long.valueOf(getEventHeaders().get(EslEventHeaderNames.EVENT_DATE_TIMESTAMP));
+		return Long.parseLong(getEventHeaders().get(EslEventHeaderNames.EVENT_DATE_TIMESTAMP));
 	}
 
 	/**

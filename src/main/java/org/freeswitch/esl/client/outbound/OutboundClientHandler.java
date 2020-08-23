@@ -31,18 +31,17 @@ import java.util.concurrent.ExecutorService;
  * the socket client in Outbound mode.  This will result in an incoming {@link EslMessage} that is
  * transformed into an {@link EslEvent} that sub classes can handle.
  * </ul>
- * Note: implementation requirement is that an {@link ExecutionHandler} is placed in the processing
+ * Note: implementation requirement is that an {@link io.netty.channel.ChannelHandler} is placed in the processing
  * pipeline prior to this handler. This will ensure that each incoming message is processed in its
  * own thread (although still guaranteed to be processed in the order of receipt).
  */
 class OutboundClientHandler extends AbstractEslClientHandler {
 
 	private final IClientHandler clientHandler;
-	private final ExecutorService callbackExecutor;
 
 	public OutboundClientHandler(IClientHandler clientHandler, ExecutorService callbackExecutor) {
 		this.clientHandler = clientHandler;
-		this.callbackExecutor = callbackExecutor;
+		super.callbackExecutor = callbackExecutor;
 	}
 
 	@Override

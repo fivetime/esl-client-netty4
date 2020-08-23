@@ -16,6 +16,7 @@
 package org.freeswitch.esl.client.internal;
 
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.freeswitch.esl.client.transport.event.EslEvent;
@@ -27,6 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -48,7 +51,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
  * Concrete sub classes are expected to 'terminate' the Netty IO processing pipeline (ie be the 'last'
  * handler).
  * </li></ul>
- * Note: implementation requirement is that an {@link ExecutionHandler} is placed in the processing
+ * Note: implementation requirement is that an {@link ChannelHandler} is placed in the processing
  * pipeline prior to this handler. This will ensure that each incoming message is processed in its
  * own thread (although still guaranteed to be processed in the order of receipt).
  */
@@ -60,12 +63,10 @@ public abstract class AbstractEslClientHandler extends SimpleChannelInboundHandl
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
 	// used to preserve association between adding future to queue and sending message on channel
 	private final ReentrantLock syncLock = new ReentrantLock();
-	private final ConcurrentLinkedQueue<CompletableFuture<EslMessage>> apiCalls =
-			new ConcurrentLinkedQueue<>();
+	private final Queue<CompletableFuture<EslMessage>> apiCalls = new ConcurrentLinkedQueue<>();
 
-	private final ConcurrentHashMap<String, CompletableFuture<EslEvent>> backgroundJobs =
-			new ConcurrentHashMap<>();
-	private final ExecutorService backgroundJobExecutor = Executors.newCachedThreadPool();
+	private final Map<String, CompletableFuture<EslEvent>> backgroundJobs = new ConcurrentHashMap<>();
+	protected ExecutorService callbackExecutor;
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) throws Exception {
@@ -217,7 +218,6 @@ public abstract class AbstractEslClientHandler extends SimpleChannelInboundHandl
 	 * @return Job-UUID as a string
 	 */
 	public CompletableFuture<EslEvent> sendBackgroundApiCommand(Channel channel, final String command) {
-
 		return sendApiSingleLineCommand(channel, command)
 				.thenComposeAsync(result -> {
 					if (result.hasHeader(Name.JOB_UUID)) {
@@ -230,7 +230,7 @@ public abstract class AbstractEslClientHandler extends SimpleChannelInboundHandl
 						resultFuture.completeExceptionally(new IllegalStateException("Missing Job-UUID header in bgapi response"));
 						return resultFuture;
 					}
-				}, backgroundJobExecutor);
+				}, callbackExecutor);
 	}
 
 	protected abstract void handleEslEvent(ChannelHandlerContext ctx, EslEvent event);
